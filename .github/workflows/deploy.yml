@@ -19,5 +19,4 @@ jobs:
           SSH_PRIVATE_KEY: ${ { secrets.EC2_SSH_KEY }}
           REMOTE_HOST: ${ { secrets.HOST_DNS }}
           REMOTE_USER: ${ { secrets.USERNAME }}
-      - name: Pull
-        run: "cd python_project && git pull"
+          TARGET: "/home/python_project"
