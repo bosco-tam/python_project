@@ -4,18 +4,19 @@ on:
   push:
     branches: [ "main" ]
 
+  workflow_dispatch:
 
 jobs:
   deploy:
     name: Deploy to server on main branch push
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout the files
-        uses: actions/checkout@v2
-      - name: Deploy to Server
-        uses: easingthemes/ssh-deploy@main
-        env:
-          SSH_PRIVATE_KEY: ${ { secrets.EC2_SSH_KEY }}
-          REMOTE_HOST: ${ { secrets.HOST_DNS }}
-          REMOTE_USER: ${ { secrets.USERNAME }}
-          TARGET: "/python_project"
+      - name: Install SSH Key
+        uses: shimataro/ssh-key-action@v2
+        with:
+          key: ${{ secrets:SSH_PRIVATE_KEY }}
+          name: github_action
+          known_hosts: ${{ secrets.SSH_HOST }}
+          if_key_exists: fail
+      - name: Pull
+        run: ssh ubuntu@13.250.110.50 "cd python_project && git pull"
