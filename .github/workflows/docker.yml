@@ -1,0 +1,17 @@
+name: Integration
+
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+  deploy:
+
+    runs-on: ubuntu-latest #runs on a server, specify a name of server
+
+
+    steps:
+    - uses: actions/checkout@v3
+    - run: docker build . -t boscotam/python-project
+    - run: echo "${{secrets.DOCKER_PASSWORD}}" | docker login -u "${{secrets.DOCKERHUB_USERNAME}}" --password-stdin
+    - run: docker push boscotam/python-project
