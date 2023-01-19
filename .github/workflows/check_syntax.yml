@@ -5,7 +5,7 @@ on:
     branches: [ "main" ]
 
 jobs:
-  build:
+  check_syntax:
 
     runs-on: ubuntu-latest
     strategy:
